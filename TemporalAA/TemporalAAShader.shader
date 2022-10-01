@@ -71,9 +71,11 @@ Shader "Hidden/TemporalAAShader"
 
 			float _TemporalFade;
             float _MovementBlending;
+            bool _UseFlipUV;
 
             float4x4 _invP;
             float4x4 _FrameMatrix;
+
 
             float sampleDepth(float2 uv) {
                 //float rd = _CameraDepthTexture.Load(int3(pix, 0)).x;
@@ -136,12 +138,16 @@ Shader "Hidden/TemporalAAShader"
             fixed4 frag(v2f i) : SV_Target
             {
 
+                float2 baseUV = i.uv;
+                if (_UseFlipUV)
+                    i.uv.y = 1 - i.uv.y;
+
                 float4 curCol = tex2D(_MainTex, i.uv);
 
                 //temporal reprojection
                 float d0 = sampleDepth(i.uv);
                 float d01 = (d0 * (_ProjectionParams.z - _ProjectionParams.y) + _ProjectionParams.y) / _ProjectionParams.z;
-                float3 pos = float3(i.uv * 2.0 - 1.0, 1.0);
+                float3 pos = float3(baseUV * 2.0 - 1.0, 1.0);
                 float4 rd = mul(_invP, float4(pos, 1));
                 rd.xyz /= rd.w;
 
