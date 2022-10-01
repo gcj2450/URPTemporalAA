@@ -33,6 +33,9 @@ public class TemporalAAFeature : ScriptableRendererFeature
     public float TemporalFade = 0.99f;
     public float MovementBlending = 100;
 
+    [Tooltip("If the resulting image appears upside down. Toggle this variable to unflip the image.")]
+    public bool UseFlipUV = false;
+
     public Material TAAMaterial;
 
     class TemporalAAPass : ScriptableRenderPass
@@ -41,6 +44,7 @@ public class TemporalAAFeature : ScriptableRendererFeature
         [Range(0, 1)]
         public float TemporalFade;
         public float MovementBlending;
+        public bool UseFlipUV;
 
         public Material TAAMaterial;
 
@@ -123,7 +127,7 @@ public class TemporalAAFeature : ScriptableRendererFeature
 
             TAAMaterial.SetFloat("_TemporalFade", TemporalFade);
             TAAMaterial.SetFloat("_MovementBlending", MovementBlending);
-
+            TAAMaterial.SetInt("_UseFlipUV", UseFlipUV ? 1 : 0);
 
             Blit(cmd, BuiltinRenderTextureType.CurrentActive, temp1, TAAMaterial);
 
@@ -159,6 +163,7 @@ public class TemporalAAFeature : ScriptableRendererFeature
         m_temporalPass.TemporalFade = this.TemporalFade;
         m_temporalPass.MovementBlending = this.MovementBlending;
         m_temporalPass.TAAMaterial = this.TAAMaterial;
+        m_temporalPass.UseFlipUV = this.UseFlipUV;
 
         // Configures where the render pass should be injected.
         m_temporalPass.renderPassEvent = RenderPassEvent.AfterRenderingPostProcessing;
