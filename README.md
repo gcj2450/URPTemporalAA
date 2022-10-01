@@ -32,8 +32,9 @@ https://www.youtube.com/watch?v=0D_8q_3q0_s
 - Done! 
 
 ### Suggested Settings
-- TemporalFade: 0.99 -> Lower leads to the current value being more represented in the final image, but more jittering is visible
+- TemporalFade: 0.95 -> Lower leads to the current value being more represented in the final image, but more jittering is visible.
 - MovementBlending: 100 -> Higher leads to more aggressive pixel rejection
+- UseFlipUV: Sometimes, post processing and other settings flip the image. Toggle this to fix upside down results.
 
 A Halton length of 8 should be enough (roughly 8x super sampling), larger values seem to make the jittering more obvious.
 
