@@ -199,7 +199,7 @@ public class TemporalAAFeature : ScriptableRendererFeature
         m_temporalPass.UseFlipUV = this.UseFlipUV;
 
         // Configures where the render pass should be injected.
-        m_temporalPass.renderPassEvent = RenderPassEvent.AfterRenderingPostProcessing;
+        m_temporalPass.renderPassEvent = RenderPassEvent.BeforeRenderingPostProcessing;
     }
 
     // Here you can inject one or multiple render passes in the renderer.
